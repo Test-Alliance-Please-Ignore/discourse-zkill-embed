@@ -1,0 +1,13 @@
+plugins:
+  zkillboard_onebox_enabled:
+    default: true
+  zkillboard_onebox_cache_ttl_hours:
+    default: 12
+    min: 1
+    max: 24
+  zkillboard_onebox_request_timeout_seconds:
+    default: 5
+    min: 1
+    max: 15
+  zkillboard_onebox_show_ship_image:
+    default: true

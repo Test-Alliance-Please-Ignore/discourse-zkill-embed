@@ -1,0 +1,19 @@
+[
+  {
+    "attackers": [
+      {
+        "corporation_id": 98557229,
+        "final_blow": true
+      }
+    ],
+    "killmail_id": 42,
+    "killmail_time": "2026-07-05T13:15:31Z",
+    "solar_system_id": 30000142,
+    "victim": {
+      "corporation_id": 98540583,
+      "ship_type_id": 587
+    },
+    "zkb": {
+    }
+  }
+]

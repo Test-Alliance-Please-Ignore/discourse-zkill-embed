@@ -1,0 +1,89 @@
+.zkillboard-killmail-onebox {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  margin: 1em 0;
+  padding: 0.9rem;
+  border: 1px solid var(--primary-low);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--secondary), var(--secondary-very-high));
+  color: var(--primary);
+}
+
+.zkillboard-killmail-onebox__image {
+  flex: 0 0 96px;
+  width: 96px;
+}
+
+.zkillboard-killmail-onebox__image img {
+  display: block;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--secondary-high);
+}
+
+.zkillboard-killmail-onebox__content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.zkillboard-killmail-onebox__eyebrow,
+.zkillboard-killmail-onebox__subtitle,
+.zkillboard-killmail-onebox__meta,
+.zkillboard-killmail-onebox__final-blow,
+.zkillboard-killmail-onebox__footer {
+  margin: 0;
+}
+
+.zkillboard-killmail-onebox__eyebrow {
+  font-size: 0.73em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-medium);
+}
+
+.zkillboard-killmail-onebox__title {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.zkillboard-killmail-onebox__subtitle,
+.zkillboard-killmail-onebox__meta,
+.zkillboard-killmail-onebox__final-blow {
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--primary-medium);
+}
+
+.zkillboard-killmail-onebox__label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.zkillboard-killmail-onebox__footer {
+  margin-top: 0.65rem;
+  font-size: 0.9rem;
+}
+
+.zkillboard-killmail-onebox__footer a {
+  color: var(--tertiary);
+  font-weight: 600;
+}
+
+@media (max-width: 500px) {
+  .zkillboard-killmail-onebox {
+    gap: 0.75rem;
+    padding: 0.8rem;
+  }
+
+  .zkillboard-killmail-onebox__image,
+  .zkillboard-killmail-onebox__image img {
+    width: 72px;
+    height: 72px;
+  }
+}

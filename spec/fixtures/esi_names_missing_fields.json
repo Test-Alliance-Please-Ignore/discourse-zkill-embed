@@ -1,0 +1,22 @@
+[
+  {
+    "category": "solar_system",
+    "id": 30000142,
+    "name": "Jita"
+  },
+  {
+    "category": "corporation",
+    "id": 98540583,
+    "name": "Victim Corp"
+  },
+  {
+    "category": "corporation",
+    "id": 98557229,
+    "name": "Final Blow Corp"
+  },
+  {
+    "category": "inventory_type",
+    "id": 587,
+    "name": "Rifter"
+  }
+]

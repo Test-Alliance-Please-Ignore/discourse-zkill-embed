@@ -1,0 +1,42 @@
+[
+  {
+    "category": "solar_system",
+    "id": 30000240,
+    "name": "4-HWWF"
+  },
+  {
+    "category": "character",
+    "id": 2113483277,
+    "name": "Trumps Bloodthirst Feynman"
+  },
+  {
+    "category": "corporation",
+    "id": 98540583,
+    "name": "Special law enforcement department"
+  },
+  {
+    "category": "alliance",
+    "id": 99003581,
+    "name": "Fraternity."
+  },
+  {
+    "category": "character",
+    "id": 2114631197,
+    "name": "Chris Martinn"
+  },
+  {
+    "category": "corporation",
+    "id": 98557229,
+    "name": "Outback Steakhouse of Pancakes"
+  },
+  {
+    "category": "alliance",
+    "id": 99004901,
+    "name": "Snuffed Out"
+  },
+  {
+    "category": "inventory_type",
+    "id": 77726,
+    "name": "Cybele"
+  }
+]

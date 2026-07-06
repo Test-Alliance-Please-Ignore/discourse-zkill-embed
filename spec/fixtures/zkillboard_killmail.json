@@ -1,0 +1,24 @@
+[
+  {
+    "attackers": [
+      {
+        "alliance_id": 99004901,
+        "character_id": 2114631197,
+        "corporation_id": 98557229,
+        "final_blow": true
+      }
+    ],
+    "killmail_id": 136795801,
+    "killmail_time": "2026-07-05T13:15:31Z",
+    "solar_system_id": 30000240,
+    "victim": {
+      "alliance_id": 99003581,
+      "character_id": 2113483277,
+      "corporation_id": 98540583,
+      "ship_type_id": 77726
+    },
+    "zkb": {
+      "totalValue": 240670608491.93
+    }
+  }
+]
