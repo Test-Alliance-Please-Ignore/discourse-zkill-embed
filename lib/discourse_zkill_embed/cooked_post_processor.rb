@@ -15,8 +15,6 @@ module ::DiscourseZkillEmbed
 
     def replace_generic_oneboxes(doc)
       doc.css("aside.onebox[data-onebox-src]").to_a.each do |aside|
-        next if aside["class"].to_s.split.include?("zkillboard-killmail-onebox")
-
         url = aside["data-onebox-src"].to_s
         next unless UrlMatcher.match?(url)
 
