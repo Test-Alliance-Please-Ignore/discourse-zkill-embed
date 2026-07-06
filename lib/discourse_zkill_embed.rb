@@ -40,6 +40,25 @@ module ::DiscourseZkillEmbed
     "#{PLUGIN_NAME}/#{PLUGIN_VERSION} (#{host})"
   end
 
+  def self.render_for_url(url, fetcher: nil, renderer_class: nil, show_ship_image: nil)
+    return "" unless enabled?
+
+    fetcher ||= KillmailPreviewFetcher.new
+    renderer_class ||= HtmlRenderer
+    show_ship_image = show_ship_image? if show_ship_image.nil?
+
+    kill_id = UrlMatcher.extract_kill_id(url)
+    return "" unless kill_id
+
+    preview = fetcher.fetch(kill_id)
+    return "" unless preview
+
+    renderer_class.new(preview, show_ship_image: show_ship_image).render
+  rescue StandardError => e
+    log(:warn, "render failed for #{url}: #{e.class}: #{e.message}")
+    ""
+  end
+
   def self.cache
     Discourse.cache
   end

@@ -8,6 +8,10 @@ module Onebox
       always_https
       matches_regexp(DiscourseZkillEmbed::UrlMatcher::URL_REGEXP)
 
+      def self.priority
+        10
+      end
+
       def self.fetcher_class
         DiscourseZkillEmbed::KillmailPreviewFetcher
       end
@@ -21,15 +25,11 @@ module Onebox
       end
 
       def to_html
-        return "" unless DiscourseZkillEmbed.enabled?
-
-        kill_id = self.class.extract_kill_id(@url)
-        return "" unless kill_id
-
-        preview = self.class.fetcher_class.new.fetch(kill_id)
-        return "" unless preview
-
-        self.class.renderer_class.new(preview).render
+        DiscourseZkillEmbed.render_for_url(
+          @url,
+          fetcher: self.class.fetcher_class.new,
+          renderer_class: self.class.renderer_class,
+        )
       rescue StandardError => e
         DiscourseZkillEmbed.log(:warn, "onebox render failed for #{@url}: #{e.class}: #{e.message}")
         ""

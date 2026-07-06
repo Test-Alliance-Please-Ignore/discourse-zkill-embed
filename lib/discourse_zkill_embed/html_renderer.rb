@@ -15,7 +15,11 @@ module ::DiscourseZkillEmbed
       return "" if @preview.empty?
 
       <<~HTML
-        <aside class="onebox zkillboard-killmail-onebox" data-kill-id="#{h(@preview[:kill_id].to_s)}">
+        <aside
+          class="onebox zkillboard-killmail-onebox"
+          data-onebox-src="#{h(@preview[:killmail_url].to_s)}"
+          data-kill-id="#{h(@preview[:kill_id].to_s)}"
+        >
           #{image_html}
           <div class="zkillboard-killmail-onebox__content">
             <p class="zkillboard-killmail-onebox__eyebrow">EVE Online killmail</p>

@@ -1,6 +1,6 @@
 # discourse-zkill-embed
 
-`discourse-zkill-embed` adds a server-side Onebox for standalone zKillboard killmail URLs such as `https://zkillboard.com/kill/136795801/`. Matching links are rendered as compact cards with ship, victim, final blow, system, kill time, total ISK value, and a link back to zKillboard.
+`discourse-zkill-embed` adds a server-side Onebox for zKillboard killmail URLs such as `https://zkillboard.com/kill/136795801/`. Matching links are rendered as compact cards with ship, victim, final blow, system, kill time, total ISK value, and a link back to zKillboard.
 
 ## Installation
 
@@ -15,6 +15,7 @@ git clone https://github.com/example/discourse-zkill-embed.git plugins/discourse
 ## How it works
 
 - Matches only `http` or `https` killmail URLs on `zkillboard.com` or `www.zkillboard.com` with numeric kill IDs.
+- Uses the normal Onebox engine path first, then applies a cooked-post fallback that upgrades matching zKillboard links if Discourse leaves them as plain anchors.
 - Fetches the killmail from `https://zkillboard.com/api/killID/<kill_id>/`.
 - Resolves ship, system, character, corporation, and alliance names through ESI `universe/names`.
 - Uses `https://images.evetech.net/types/<type_id>/render?size=128` for the ship thumbnail.
@@ -51,5 +52,6 @@ If you are testing inside a Discourse checkout, also verify a real cooked post w
 ## Troubleshooting
 
 - Check site settings if links stay plain.
+- For the cleanest result, test with the killmail URL on its own line in the post body.
 - Review Rails logs for `[discourse-zkill-embed]` warnings.
 - Confirm outbound HTTPS access to `zkillboard.com`, `esi.evetech.net`, and `images.evetech.net`.

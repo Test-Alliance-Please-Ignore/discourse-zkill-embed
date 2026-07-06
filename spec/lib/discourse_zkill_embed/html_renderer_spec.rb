@@ -28,6 +28,7 @@ describe DiscourseZkillEmbed::HtmlRenderer do
     _(html).must_include "Final blow:"
     _(html).must_include "View on zKillboard"
     _(html).must_include "https://zkillboard.com/kill/136795801/"
+    _(html).must_include "data-onebox-src=\"https://zkillboard.com/kill/136795801/\""
   end
 
   it "escapes remote text fields" do

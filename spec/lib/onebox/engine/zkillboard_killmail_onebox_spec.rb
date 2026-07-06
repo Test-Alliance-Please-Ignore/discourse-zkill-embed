@@ -8,6 +8,10 @@ describe Onebox::Engine::ZKillboardKillmailOnebox do
     _(Onebox::Engine::ZKillboardKillmailOnebox.matcher.match("https://zkillboard.com.evil.tld/kill/136795801/")).must_be_nil
   end
 
+  it "has a high matcher priority" do
+    _(Onebox::Engine::ZKillboardKillmailOnebox.priority).must_equal 10
+  end
+
   it "returns rendered HTML when preview data is available" do
     preview = { kill_id: 1, killmail_url: "https://zkillboard.com/kill/1/" }
     fetcher = Minitest::Mock.new
@@ -17,8 +21,8 @@ describe Onebox::Engine::ZKillboardKillmailOnebox do
 
     renderer = Minitest::Mock.new
     renderer.expect(:render, "<aside>ok</aside>")
-    renderer_class = Class.new { define_method(:initialize) { |_preview| } }
-    renderer_class.define_singleton_method(:new) { |_preview| renderer }
+    renderer_class = Class.new { define_method(:initialize) { |_preview, show_ship_image: true| } }
+    renderer_class.define_singleton_method(:new) { |_preview, show_ship_image: true| renderer }
 
     html =
       Onebox::Engine::ZKillboardKillmailOnebox.stub(:fetcher_class, fetcher_class) do
