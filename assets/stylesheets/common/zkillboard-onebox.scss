@@ -1,37 +1,22 @@
 .zkillboard-killmail-onebox {
-  --zkillboard-onebox-accent: var(--tertiary);
-  --zkillboard-onebox-border: color-mix(in srgb, var(--primary-low) 72%, var(--zkillboard-onebox-accent) 28%);
-  --zkillboard-onebox-panel: color-mix(in srgb, var(--secondary) 88%, var(--secondary-very-high) 12%);
-  --zkillboard-onebox-chip: color-mix(in srgb, var(--secondary-high) 78%, var(--zkillboard-onebox-accent) 22%);
-  --zkillboard-onebox-inset: color-mix(in srgb, var(--secondary-very-high) 82%, var(--zkillboard-onebox-accent) 18%);
   display: flex;
   gap: 0.8rem;
   align-items: flex-start;
   margin: 1em 0;
   padding: 0.8rem 0.9rem;
-  border: 1px solid var(--zkillboard-onebox-border);
-  border-left-width: 4px;
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--zkillboard-onebox-accent) 14%, transparent) 0, transparent 34%),
-    linear-gradient(180deg, var(--zkillboard-onebox-panel), var(--secondary));
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent),
-    0 10px 24px color-mix(in srgb, black 18%, transparent);
+  border: 1px solid var(--primary-low);
+  border-radius: 12px;
+  background: var(--secondary);
   color: var(--primary);
 }
 
 .zkillboard-killmail-onebox__image {
   flex: 0 0 84px;
   width: 84px;
-  padding: 3px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--zkillboard-onebox-accent) 26%, transparent), transparent);
 }
 
 .zkillboard-killmail-onebox__image a {
   display: block;
-  border-radius: 10px;
 }
 
 .zkillboard-killmail-onebox__image img {
@@ -39,9 +24,8 @@
   width: 84px;
   height: 84px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--secondary-high);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary-low) 82%, transparent);
 }
 
 .zkillboard-killmail-onebox__content {
@@ -49,17 +33,10 @@
   flex: 1 1 auto;
 }
 
-.zkillboard-killmail-onebox__header {
-  display: flex;
-  gap: 0.45rem;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;
-}
-
 .zkillboard-killmail-onebox__eyebrow,
-.zkillboard-killmail-onebox__source,
 .zkillboard-killmail-onebox__subtitle,
+.zkillboard-killmail-onebox__meta,
+.zkillboard-killmail-onebox__final-blow,
 .zkillboard-killmail-onebox__footer {
   margin: 0;
 }
@@ -70,18 +47,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--primary-medium);
-}
-
-.zkillboard-killmail-onebox__source {
-  flex: 0 0 auto;
-  padding: 0.16rem 0.48rem;
-  border: 1px solid color-mix(in srgb, var(--primary-low) 60%, transparent);
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--primary-medium);
-  background: color-mix(in srgb, var(--secondary-high) 78%, transparent);
 }
 
 .zkillboard-killmail-onebox__title {
@@ -98,67 +63,17 @@
   color: var(--primary-medium);
 }
 
-.zkillboard-killmail-onebox__subtitle a,
-.zkillboard-killmail-onebox__detail-text a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--zkillboard-onebox-accent) 34%, transparent);
-}
-
-.zkillboard-killmail-onebox__subtitle a:hover,
-.zkillboard-killmail-onebox__subtitle a:focus,
-.zkillboard-killmail-onebox__detail-text a:hover,
-.zkillboard-killmail-onebox__detail-text a:focus {
-  color: var(--zkillboard-onebox-accent);
-  border-bottom-color: currentColor;
-}
-
-.zkillboard-killmail-onebox__facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.55rem;
-}
-
-.zkillboard-killmail-onebox__fact,
+.zkillboard-killmail-onebox__meta,
 .zkillboard-killmail-onebox__final-blow {
-  min-width: 0;
-  border: 1px solid color-mix(in srgb, var(--primary-low) 74%, transparent);
-  border-radius: 12px;
-}
-
-.zkillboard-killmail-onebox__fact {
-  padding: 0.42rem 0.58rem;
-  background: linear-gradient(180deg, var(--zkillboard-onebox-chip), color-mix(in srgb, var(--secondary-high) 88%, transparent));
-}
-
-.zkillboard-killmail-onebox__detail-label,
-.zkillboard-killmail-onebox__detail-text {
-  margin: 0;
-}
-
-.zkillboard-killmail-onebox__detail-label {
-  font-size: 0.64rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  margin-top: 0.55rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: var(--primary-medium);
 }
 
-.zkillboard-killmail-onebox__detail-text {
-  margin-top: 0.24rem;
-  font-size: 0.88rem;
-  line-height: 1.3;
+.zkillboard-killmail-onebox__label {
   color: var(--primary);
-}
-
-.zkillboard-killmail-onebox__final-blow {
-  margin-top: 0.55rem;
-  padding: 0.52rem 0.65rem;
-  border-left: 3px solid color-mix(in srgb, var(--zkillboard-onebox-accent) 42%, transparent);
-  background: color-mix(in srgb, var(--secondary-high) 88%, var(--secondary));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary) 5%, transparent);
+  font-weight: 600;
 }
 
 .zkillboard-killmail-onebox__footer {
@@ -166,22 +81,14 @@
   font-size: 0.88rem;
 }
 
-.zkillboard-killmail-onebox__footer a {
-  color: var(--tertiary);
-  font-weight: 600;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.18em;
+.zkillboard-killmail-onebox__separator {
+  color: var(--primary-low-mid);
 }
 
 @media (max-width: 500px) {
   .zkillboard-killmail-onebox {
     gap: 0.65rem;
     padding: 0.7rem;
-  }
-
-  .zkillboard-killmail-onebox__header {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .zkillboard-killmail-onebox__image,
@@ -192,13 +99,5 @@
 
   .zkillboard-killmail-onebox__title {
     font-size: 1rem;
-  }
-
-  .zkillboard-killmail-onebox__facts {
-    gap: 0.45rem;
-  }
-
-  .zkillboard-killmail-onebox__fact {
-    width: 100%;
   }
 }
