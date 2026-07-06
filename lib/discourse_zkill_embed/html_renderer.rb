@@ -27,7 +27,7 @@ module ::DiscourseZkillEmbed
               <p class="zkillboard-killmail-onebox__source">zKillboard</p>
             </div>
             <h3 class="zkillboard-killmail-onebox__title">#{h(title_text)}</h3>
-            <p class="zkillboard-killmail-onebox__subtitle">#{h(victim_text)}</p>
+            <p class="zkillboard-killmail-onebox__subtitle">#{victim_html}</p>
             #{facts_html}
             #{final_blow_html}
             <div class="zkillboard-killmail-onebox__footer">
@@ -48,19 +48,27 @@ module ::DiscourseZkillEmbed
 
       <<~HTML
         <div class="zkillboard-killmail-onebox__image">
-          <img src="#{h(image_url)}" alt="#{h(title_text)}" loading="lazy">
+          <a href="#{h(@preview[:killmail_url].to_s)}" aria-label="#{h(title_text)}">
+            <img src="#{h(image_url)}" alt="#{h(title_text)}" loading="lazy">
+          </a>
         </div>
       HTML
     end
 
     def final_blow_html
-      text = final_blow_text
-      return "" if text.nil? || text.empty?
+      html = linked_entities_html(
+        [
+          [@preview[:final_blow_name], :character, @preview[:final_blow_character_id]],
+          [@preview[:final_blow_corporation_name], :corporation, @preview[:final_blow_corporation_id]],
+          [@preview[:final_blow_alliance_name], :alliance, @preview[:final_blow_alliance_id]],
+        ],
+      )
+      return "" if html.empty?
 
       <<~HTML
         <div class="zkillboard-killmail-onebox__final-blow">
           <p class="zkillboard-killmail-onebox__detail-label">Final blow</p>
-          <p class="zkillboard-killmail-onebox__detail-text">#{h(text)}</p>
+          <p class="zkillboard-killmail-onebox__detail-text">#{html}</p>
         </div>
       HTML
     end
@@ -71,18 +79,24 @@ module ::DiscourseZkillEmbed
       "#{ship_name} destroyed"
     end
 
-    def victim_text
-      text = join_present(@preview[:victim_name], @preview[:victim_corporation_name], @preview[:victim_alliance_name])
-      return text unless text.empty?
+    def victim_html
+      html = linked_entities_html(
+        [
+          [@preview[:victim_name], :character, @preview[:victim_character_id]],
+          [@preview[:victim_corporation_name], :corporation, @preview[:victim_corporation_id]],
+          [@preview[:victim_alliance_name], :alliance, @preview[:victim_alliance_id]],
+        ],
+      )
+      return html unless html.empty?
 
-      "Victim details unavailable"
+      h("Victim details unavailable")
     end
 
     def facts_html
       facts = []
-      facts << fact_html("System", @preview[:solar_system_name])
-      facts << fact_html("Time", @preview[:killmail_time])
-      facts << fact_html("Value", @preview[:total_value_display])
+      facts << fact_html("System", linked_value_html(@preview[:solar_system_name], :system, @preview[:solar_system_id]))
+      facts << fact_html("Time", text_html(@preview[:killmail_time]))
+      facts << fact_html("Value", text_html(@preview[:total_value_display]))
       facts.compact!
 
       return "" if facts.empty?
@@ -94,27 +108,45 @@ module ::DiscourseZkillEmbed
       HTML
     end
 
-    def final_blow_text
-      join_present(
-        @preview[:final_blow_name],
-        @preview[:final_blow_corporation_name],
-        @preview[:final_blow_alliance_name],
-      )
-    end
-
-    def join_present(*values, separator: " / ")
-      values.flatten.compact.map(&:to_s).map(&:strip).reject(&:empty?).join(separator)
-    end
-
-    def fact_html(label, value)
-      return nil if value.nil? || value.to_s.strip.empty?
+    def fact_html(label, value_html)
+      return nil if value_html.nil? || value_html.empty?
 
       <<~HTML
         <div class="zkillboard-killmail-onebox__fact">
           <p class="zkillboard-killmail-onebox__detail-label">#{h(label)}</p>
-          <p class="zkillboard-killmail-onebox__detail-text">#{h(value)}</p>
+          <p class="zkillboard-killmail-onebox__detail-text">#{value_html}</p>
         </div>
       HTML
+    end
+
+    def linked_entities_html(entities, separator: " / ")
+      parts =
+        entities.filter_map do |name, entity_type, entity_id|
+          next if blank_text?(name)
+
+          linked_value_html(name, entity_type, entity_id)
+        end
+
+      parts.join(separator)
+    end
+
+    def linked_value_html(text, entity_type, entity_id)
+      return nil if blank_text?(text)
+
+      url = DiscourseZkillEmbed.zkillboard_entity_url(entity_type, entity_id)
+      return text_html(text) if url.nil?
+
+      %(<a href="#{h(url)}">#{h(text.to_s.strip)}</a>)
+    end
+
+    def text_html(text)
+      return nil if blank_text?(text)
+
+      h(text.to_s.strip)
+    end
+
+    def blank_text?(value)
+      value.nil? || value.to_s.strip.empty?
     end
   end
 end

@@ -88,19 +88,33 @@ module ::DiscourseZkillEmbed
       final_blow = hash_value(Array(killmail["attackers"]).find { |attacker| attacker["final_blow"] })
       zkb = hash_value(killmail["zkb"])
       ship_type_id = normalize_positive_integer(victim["ship_type_id"])
+      solar_system_id = normalize_positive_integer(killmail["solar_system_id"])
+      victim_character_id = normalize_positive_integer(victim["character_id"])
+      victim_corporation_id = normalize_positive_integer(victim["corporation_id"])
+      victim_alliance_id = normalize_positive_integer(victim["alliance_id"])
+      final_blow_character_id = normalize_positive_integer(final_blow["character_id"])
+      final_blow_corporation_id = normalize_positive_integer(final_blow["corporation_id"])
+      final_blow_alliance_id = normalize_positive_integer(final_blow["alliance_id"])
 
       {
         kill_id: kill_id,
         killmail_url: canonical_killmail_url(kill_id),
         ship_type_id: ship_type_id,
         ship_type_name: names[ship_type_id],
-        victim_name: names[normalize_positive_integer(victim["character_id"])],
-        victim_corporation_name: names[normalize_positive_integer(victim["corporation_id"])],
-        victim_alliance_name: names[normalize_positive_integer(victim["alliance_id"])],
-        final_blow_name: names[normalize_positive_integer(final_blow["character_id"])],
-        final_blow_corporation_name: names[normalize_positive_integer(final_blow["corporation_id"])],
-        final_blow_alliance_name: names[normalize_positive_integer(final_blow["alliance_id"])],
-        solar_system_name: names[normalize_positive_integer(killmail["solar_system_id"])],
+        victim_character_id: victim_character_id,
+        victim_name: names[victim_character_id],
+        victim_corporation_id: victim_corporation_id,
+        victim_corporation_name: names[victim_corporation_id],
+        victim_alliance_id: victim_alliance_id,
+        victim_alliance_name: names[victim_alliance_id],
+        final_blow_character_id: final_blow_character_id,
+        final_blow_name: names[final_blow_character_id],
+        final_blow_corporation_id: final_blow_corporation_id,
+        final_blow_corporation_name: names[final_blow_corporation_id],
+        final_blow_alliance_id: final_blow_alliance_id,
+        final_blow_alliance_name: names[final_blow_alliance_id],
+        solar_system_id: solar_system_id,
+        solar_system_name: names[solar_system_id],
         killmail_time: format_killmail_time(killmail["killmail_time"]),
         total_value: zkb["totalValue"],
         total_value_display: format_isk(zkb["totalValue"]),
@@ -151,10 +165,7 @@ module ::DiscourseZkillEmbed
     end
 
     def normalize_positive_integer(value)
-      integer = value.is_a?(String) ? Integer(value, 10) : Integer(value)
-      integer.positive? ? integer : nil
-    rescue ArgumentError, TypeError
-      nil
+      DiscourseZkillEmbed.normalize_positive_integer(value)
     end
 
     def hash_value(value)

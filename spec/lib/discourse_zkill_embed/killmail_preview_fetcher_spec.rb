@@ -34,12 +34,19 @@ describe DiscourseZkillEmbed::KillmailPreviewFetcher do
     preview = DiscourseZkillEmbed::KillmailPreviewFetcher.new(client: client, cache: Discourse.cache).fetch(136795801)
 
     _(preview[:ship_type_name]).must_equal "Cybele"
+    _(preview[:victim_character_id]).must_equal 2113483277
     _(preview[:victim_name]).must_equal "Trumps Bloodthirst Feynman"
+    _(preview[:victim_corporation_id]).must_equal 98540583
     _(preview[:victim_corporation_name]).must_equal "Special law enforcement department"
+    _(preview[:victim_alliance_id]).must_equal 99003581
     _(preview[:victim_alliance_name]).must_equal "Fraternity."
+    _(preview[:final_blow_character_id]).must_equal 2114631197
     _(preview[:final_blow_name]).must_equal "Chris Martinn"
+    _(preview[:final_blow_corporation_id]).must_equal 98557229
     _(preview[:final_blow_corporation_name]).must_equal "Outback Steakhouse of Pancakes"
+    _(preview[:final_blow_alliance_id]).must_equal 99004901
     _(preview[:final_blow_alliance_name]).must_equal "Snuffed Out"
+    _(preview[:solar_system_id]).must_equal 30000240
     _(preview[:solar_system_name]).must_equal "4-HWWF"
     _(preview[:killmail_time]).must_equal "2026-07-05 13:15 UTC"
     _(preview[:total_value_display]).must_equal "240.67B ISK"
@@ -58,10 +65,13 @@ describe DiscourseZkillEmbed::KillmailPreviewFetcher do
 
     _(preview[:ship_type_name]).must_equal "Rifter"
     _(preview[:victim_name]).must_be_nil
+    _(preview[:victim_corporation_id]).must_equal 98540583
     _(preview[:victim_corporation_name]).must_equal "Victim Corp"
     _(preview[:victim_alliance_name]).must_be_nil
     _(preview[:final_blow_name]).must_be_nil
+    _(preview[:final_blow_corporation_id]).must_equal 98557229
     _(preview[:final_blow_corporation_name]).must_equal "Final Blow Corp"
+    _(preview[:solar_system_id]).must_equal 30000142
     _(preview[:total_value_display]).must_be_nil
   end
 

@@ -29,6 +29,11 @@
   background: linear-gradient(180deg, color-mix(in srgb, var(--zkillboard-onebox-accent) 26%, transparent), transparent);
 }
 
+.zkillboard-killmail-onebox__image a {
+  display: block;
+  border-radius: 10px;
+}
+
 .zkillboard-killmail-onebox__image img {
   display: block;
   width: 84px;
@@ -91,6 +96,21 @@
   font-size: 0.93rem;
   line-height: 1.4;
   color: var(--primary-medium);
+}
+
+.zkillboard-killmail-onebox__subtitle a,
+.zkillboard-killmail-onebox__detail-text a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--zkillboard-onebox-accent) 34%, transparent);
+}
+
+.zkillboard-killmail-onebox__subtitle a:hover,
+.zkillboard-killmail-onebox__subtitle a:focus,
+.zkillboard-killmail-onebox__detail-text a:hover,
+.zkillboard-killmail-onebox__detail-text a:focus {
+  color: var(--zkillboard-onebox-accent);
+  border-bottom-color: currentColor;
 }
 
 .zkillboard-killmail-onebox__facts {

@@ -6,6 +6,7 @@ module ::DiscourseZkillEmbed
   PLUGIN_NAME = "discourse-zkill-embed"
   PLUGIN_VERSION = "0.1.0"
   ZKILLBOARD_API_HOST = "zkillboard.com"
+  ZKILLBOARD_WEB_URL = "https://zkillboard.com"
   ZKILLBOARD_API_URL_TEMPLATE = "https://zkillboard.com/api/killID/%<kill_id>d/"
   ESI_HOST = "esi.evetech.net"
   ESI_NAMES_URL = "https://esi.evetech.net/latest/universe/names/?datasource=tranquility"
@@ -59,6 +60,27 @@ module ::DiscourseZkillEmbed
     ""
   end
 
+  def self.zkillboard_entity_url(entity_type, entity_id)
+    normalized_id = normalize_positive_integer(entity_id)
+    return nil unless normalized_id
+
+    path_segment =
+      case entity_type.to_sym
+      when :system
+        "system"
+      when :character
+        "character"
+      when :corporation
+        "corporation"
+      when :alliance
+        "alliance"
+      end
+
+    return nil if path_segment.nil?
+
+    "#{ZKILLBOARD_WEB_URL}/#{path_segment}/#{normalized_id}/"
+  end
+
   def self.cache
     Discourse.cache
   end
@@ -83,5 +105,12 @@ module ::DiscourseZkillEmbed
     SiteSetting.public_send(name)
   rescue StandardError
     default
+  end
+
+  def self.normalize_positive_integer(value)
+    integer = value.is_a?(String) ? Integer(value, 10) : Integer(value)
+    integer.positive? ? integer : nil
+  rescue ArgumentError, TypeError
+    nil
   end
 end
