@@ -25,7 +25,7 @@ module ::DiscourseZkillEmbed
             <p class="zkillboard-killmail-onebox__eyebrow">EVE Online killmail</p>
             <h3 class="zkillboard-killmail-onebox__title">#{h(title_text)}</h3>
             <p class="zkillboard-killmail-onebox__subtitle">#{victim_html}</p>
-            #{facts_html}
+            #{meta_html}
             #{final_blow_html}
             <div class="zkillboard-killmail-onebox__footer">
               <a href="#{h(@preview[:killmail_url].to_s)}">View on zKillboard</a>
@@ -88,22 +88,16 @@ module ::DiscourseZkillEmbed
       h("Victim details unavailable")
     end
 
-    def facts_html
-      facts = []
-      facts << meta_item_html("System", linked_value_html(@preview[:solar_system_name], :system, @preview[:solar_system_id]))
-      facts << meta_item_html("Time", text_html(@preview[:killmail_time]))
-      facts << meta_item_html("Value", text_html(@preview[:total_value_display]))
-      facts.compact!
+    def meta_html
+      parts = []
+      parts << linked_value_html(@preview[:solar_system_name], :system, @preview[:solar_system_id])
+      parts << text_html(@preview[:killmail_time])
+      parts << text_html(@preview[:total_value_display])
+      parts.compact!
 
-      return "" if facts.empty?
+      return "" if parts.empty?
 
-      %(<p class="zkillboard-killmail-onebox__meta">#{facts.join(%(<span class="zkillboard-killmail-onebox__separator"> | </span>))}</p>)
-    end
-
-    def meta_item_html(label, value_html)
-      return nil if value_html.nil? || value_html.empty?
-
-      %(<span class="zkillboard-killmail-onebox__meta-item"><span class="zkillboard-killmail-onebox__label">#{h(label)}:</span> #{value_html}</span>)
+      %(<p class="zkillboard-killmail-onebox__meta">#{parts.join(%(<span class="zkillboard-killmail-onebox__separator"> | </span>))}</p>)
     end
 
     def linked_entities_html(entities, separator: " / ")
