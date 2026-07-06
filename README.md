@@ -31,6 +31,8 @@ git clone https://github.com/example/discourse-zkill-embed.git plugins/discourse
 
 Successful upstream responses are cached through `Discourse.cache`. Failed or missing lookups are cached for 10 minutes to avoid repeated retries. If the upstream request fails or the payload cannot be parsed, the Onebox returns blank HTML so Discourse leaves the plain link in place.
 
+The zKill preview cache key includes an explicit internal version so future renderer or payload changes can invalidate stale cached previews by bumping one constant.
+
 ## Security notes
 
 - Only fixed HTTPS endpoints are requested.

@@ -13,7 +13,8 @@ module ::DiscourseZkillEmbed
       normalized_kill_id = normalize_positive_integer(kill_id)
       return nil unless normalized_kill_id
 
-      cached = @cache.read(cache_key(normalized_kill_id))
+      key = cache_key(normalized_kill_id)
+      cached = @cache.read(key)
       if cached
         return cached[:preview] if cached[:status] == :ok
         return nil if cached[:status] == :missing
@@ -22,13 +23,13 @@ module ::DiscourseZkillEmbed
       preview = load_preview(normalized_kill_id)
       if preview
         @cache.write(
-          cache_key(normalized_kill_id),
+          key,
           { status: :ok, preview: preview },
           expires_in: DiscourseZkillEmbed.success_cache_ttl_seconds,
         )
       else
         @cache.write(
-          cache_key(normalized_kill_id),
+          key,
           { status: :missing },
           expires_in: DiscourseZkillEmbed::FAILURE_CACHE_TTL_SECONDS,
         )
@@ -127,7 +128,7 @@ module ::DiscourseZkillEmbed
     end
 
     def cache_key(kill_id)
-      "#{DiscourseZkillEmbed::PLUGIN_NAME}:killmail:#{kill_id}"
+      DiscourseZkillEmbed.killmail_preview_cache_key(kill_id)
     end
 
     def image_url_for(type_id)

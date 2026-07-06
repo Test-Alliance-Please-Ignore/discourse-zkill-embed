@@ -91,6 +91,24 @@ describe DiscourseZkillEmbed::KillmailPreviewFetcher do
     _(client.post_json_calls).must_equal 1
   end
 
+  it "stores previews under a versioned cache key" do
+    client =
+      FakeHttpClient.new(
+        get_json_response: SpecSupport.fixture_json("zkillboard_killmail.json"),
+        post_json_response: SpecSupport.fixture_json("esi_names.json"),
+      )
+
+    fetcher = DiscourseZkillEmbed::KillmailPreviewFetcher.new(client: client, cache: Discourse.cache)
+    fetcher.fetch(136795801)
+
+    expected_key = DiscourseZkillEmbed.killmail_preview_cache_key(136795801)
+
+    _(expected_key).must_equal(
+      "discourse-zkill-embed:killmail-preview:v#{DiscourseZkillEmbed::KILLMAIL_PREVIEW_CACHE_VERSION}:136795801",
+    )
+    _(Discourse.cache.store.keys).must_include expected_key
+  end
+
   it "negative-caches failed requests" do
     client = FakeHttpClient.new(get_json_response: nil, post_json_response: nil)
     fetcher = DiscourseZkillEmbed::KillmailPreviewFetcher.new(client: client, cache: Discourse.cache)

@@ -5,6 +5,7 @@ require "logger"
 module ::DiscourseZkillEmbed
   PLUGIN_NAME = "discourse-zkill-embed"
   PLUGIN_VERSION = "0.1.0"
+  KILLMAIL_PREVIEW_CACHE_VERSION = 2
   ZKILLBOARD_API_HOST = "zkillboard.com"
   ZKILLBOARD_WEB_URL = "https://zkillboard.com"
   ZKILLBOARD_API_URL_TEMPLATE = "https://zkillboard.com/api/killID/%<kill_id>d/"
@@ -79,6 +80,13 @@ module ::DiscourseZkillEmbed
     return nil if path_segment.nil?
 
     "#{ZKILLBOARD_WEB_URL}/#{path_segment}/#{normalized_id}/"
+  end
+
+  def self.killmail_preview_cache_key(kill_id)
+    normalized_id = normalize_positive_integer(kill_id)
+    return nil unless normalized_id
+
+    "#{PLUGIN_NAME}:killmail-preview:v#{KILLMAIL_PREVIEW_CACHE_VERSION}:#{normalized_id}"
   end
 
   def self.cache
