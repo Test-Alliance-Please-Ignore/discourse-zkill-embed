@@ -24,8 +24,13 @@ describe DiscourseZkillEmbed::HtmlRenderer do
 
     _(html).must_include "Cybele destroyed"
     _(html).must_include "Trumps Bloodthirst Feynman / Special law enforcement department / Fraternity."
-    _(html).must_include "4-HWWF | 2026-07-05 13:15 UTC | 240.67B ISK"
-    _(html).must_include "Final blow:"
+    _(html).must_include "System"
+    _(html).must_include "4-HWWF"
+    _(html).must_include "Time"
+    _(html).must_include "2026-07-05 13:15 UTC"
+    _(html).must_include "Value"
+    _(html).must_include "240.67B ISK"
+    _(html).must_include "Final blow"
     _(html).must_include "View on zKillboard"
     _(html).must_include "https://zkillboard.com/kill/136795801/"
     _(html).must_include "data-onebox-src=\"https://zkillboard.com/kill/136795801/\""
@@ -70,7 +75,10 @@ describe DiscourseZkillEmbed::HtmlRenderer do
 
     _(html).must_include "Rifter destroyed"
     _(html).must_include "Victim Corp"
-    _(html).must_include "Jita | 2026-07-05 13:15 UTC"
-    _(html).wont_include "Final blow:"
+    _(html).must_include "System"
+    _(html).must_include "Jita"
+    _(html).must_include "Time"
+    _(html).must_include "2026-07-05 13:15 UTC"
+    _(html).wont_include "Final blow"
   end
 end

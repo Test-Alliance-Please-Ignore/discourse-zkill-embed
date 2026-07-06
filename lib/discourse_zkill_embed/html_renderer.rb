@@ -22,10 +22,13 @@ module ::DiscourseZkillEmbed
         >
           #{image_html}
           <div class="zkillboard-killmail-onebox__content">
-            <p class="zkillboard-killmail-onebox__eyebrow">EVE Online killmail</p>
+            <div class="zkillboard-killmail-onebox__header">
+              <p class="zkillboard-killmail-onebox__eyebrow">EVE Online killmail</p>
+              <p class="zkillboard-killmail-onebox__source">zKillboard</p>
+            </div>
             <h3 class="zkillboard-killmail-onebox__title">#{h(title_text)}</h3>
             <p class="zkillboard-killmail-onebox__subtitle">#{h(victim_text)}</p>
-            <p class="zkillboard-killmail-onebox__meta">#{h(meta_text)}</p>
+            #{facts_html}
             #{final_blow_html}
             <div class="zkillboard-killmail-onebox__footer">
               <a href="#{h(@preview[:killmail_url].to_s)}">View on zKillboard</a>
@@ -54,7 +57,12 @@ module ::DiscourseZkillEmbed
       text = final_blow_text
       return "" if text.nil? || text.empty?
 
-      %(<p class="zkillboard-killmail-onebox__final-blow"><span class="zkillboard-killmail-onebox__label">Final blow:</span> #{h(text)}</p>)
+      <<~HTML
+        <div class="zkillboard-killmail-onebox__final-blow">
+          <p class="zkillboard-killmail-onebox__detail-label">Final blow</p>
+          <p class="zkillboard-killmail-onebox__detail-text">#{h(text)}</p>
+        </div>
+      HTML
     end
 
     def title_text
@@ -70,11 +78,20 @@ module ::DiscourseZkillEmbed
       "Victim details unavailable"
     end
 
-    def meta_text
-      text = join_present(@preview[:solar_system_name], @preview[:killmail_time], @preview[:total_value_display], separator: " | ")
-      return text unless text.empty?
+    def facts_html
+      facts = []
+      facts << fact_html("System", @preview[:solar_system_name])
+      facts << fact_html("Time", @preview[:killmail_time])
+      facts << fact_html("Value", @preview[:total_value_display])
+      facts.compact!
 
-      "Kill details unavailable"
+      return "" if facts.empty?
+
+      <<~HTML
+        <div class="zkillboard-killmail-onebox__facts">
+          #{facts.join("\n")}
+        </div>
+      HTML
     end
 
     def final_blow_text
@@ -87,6 +104,17 @@ module ::DiscourseZkillEmbed
 
     def join_present(*values, separator: " / ")
       values.flatten.compact.map(&:to_s).map(&:strip).reject(&:empty?).join(separator)
+    end
+
+    def fact_html(label, value)
+      return nil if value.nil? || value.to_s.strip.empty?
+
+      <<~HTML
+        <div class="zkillboard-killmail-onebox__fact">
+          <p class="zkillboard-killmail-onebox__detail-label">#{h(label)}</p>
+          <p class="zkillboard-killmail-onebox__detail-text">#{h(value)}</p>
+        </div>
+      HTML
     end
   end
 end

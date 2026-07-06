@@ -1,18 +1,32 @@
 .zkillboard-killmail-onebox {
+  --zkillboard-onebox-accent: var(--tertiary);
+  --zkillboard-onebox-border: color-mix(in srgb, var(--primary-low) 72%, var(--zkillboard-onebox-accent) 28%);
+  --zkillboard-onebox-panel: color-mix(in srgb, var(--secondary) 88%, var(--secondary-very-high) 12%);
+  --zkillboard-onebox-chip: color-mix(in srgb, var(--secondary-high) 78%, var(--zkillboard-onebox-accent) 22%);
+  --zkillboard-onebox-inset: color-mix(in srgb, var(--secondary-very-high) 82%, var(--zkillboard-onebox-accent) 18%);
   display: flex;
-  gap: 0.9rem;
+  gap: 1rem;
   align-items: flex-start;
   margin: 1em 0;
-  padding: 0.9rem;
-  border: 1px solid var(--primary-low);
-  border-radius: 14px;
-  background: linear-gradient(180deg, var(--secondary), var(--secondary-very-high));
+  padding: 1rem;
+  border: 1px solid var(--zkillboard-onebox-border);
+  border-left-width: 4px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--zkillboard-onebox-accent) 14%, transparent) 0, transparent 34%),
+    linear-gradient(180deg, var(--zkillboard-onebox-panel), var(--secondary));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent),
+    0 10px 24px color-mix(in srgb, black 18%, transparent);
   color: var(--primary);
 }
 
 .zkillboard-killmail-onebox__image {
   flex: 0 0 96px;
   width: 96px;
+  padding: 4px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--zkillboard-onebox-accent) 26%, transparent), transparent);
 }
 
 .zkillboard-killmail-onebox__image img {
@@ -20,8 +34,9 @@
   width: 96px;
   height: 96px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--secondary-high);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary-low) 82%, transparent);
 }
 
 .zkillboard-killmail-onebox__content {
@@ -29,10 +44,17 @@
   flex: 1 1 auto;
 }
 
+.zkillboard-killmail-onebox__header {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
 .zkillboard-killmail-onebox__eyebrow,
+.zkillboard-killmail-onebox__source,
 .zkillboard-killmail-onebox__subtitle,
-.zkillboard-killmail-onebox__meta,
-.zkillboard-killmail-onebox__final-blow,
 .zkillboard-killmail-onebox__footer {
   margin: 0;
 }
@@ -45,34 +67,88 @@
   color: var(--primary-medium);
 }
 
-.zkillboard-killmail-onebox__title {
-  margin: 0.2rem 0 0;
-  font-size: 1rem;
-  line-height: 1.35;
+.zkillboard-killmail-onebox__source {
+  flex: 0 0 auto;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--primary-low) 60%, transparent);
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--primary-medium);
+  background: color-mix(in srgb, var(--secondary-high) 78%, transparent);
 }
 
-.zkillboard-killmail-onebox__subtitle,
-.zkillboard-killmail-onebox__meta,
-.zkillboard-killmail-onebox__final-blow {
-  margin-top: 0.35rem;
-  font-size: 0.92rem;
+.zkillboard-killmail-onebox__title {
+  margin: 0.35rem 0 0;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.zkillboard-killmail-onebox__subtitle {
+  margin-top: 0.45rem;
+  font-size: 0.96rem;
   line-height: 1.45;
   color: var(--primary-medium);
 }
 
-.zkillboard-killmail-onebox__label {
+.zkillboard-killmail-onebox__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.zkillboard-killmail-onebox__fact,
+.zkillboard-killmail-onebox__final-blow {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--primary-low) 74%, transparent);
+  border-radius: 12px;
+}
+
+.zkillboard-killmail-onebox__fact {
+  padding: 0.55rem 0.7rem;
+  background: linear-gradient(180deg, var(--zkillboard-onebox-chip), color-mix(in srgb, var(--secondary-high) 88%, transparent));
+}
+
+.zkillboard-killmail-onebox__detail-label,
+.zkillboard-killmail-onebox__detail-text {
+  margin: 0;
+}
+
+.zkillboard-killmail-onebox__detail-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--primary-medium);
+}
+
+.zkillboard-killmail-onebox__detail-text {
+  margin-top: 0.32rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
   color: var(--primary);
-  font-weight: 600;
+}
+
+.zkillboard-killmail-onebox__final-blow {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  background: linear-gradient(180deg, var(--zkillboard-onebox-inset), color-mix(in srgb, var(--secondary-high) 92%, transparent));
 }
 
 .zkillboard-killmail-onebox__footer {
-  margin-top: 0.65rem;
+  margin-top: 0.8rem;
   font-size: 0.9rem;
 }
 
 .zkillboard-killmail-onebox__footer a {
   color: var(--tertiary);
   font-weight: 600;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
 }
 
 @media (max-width: 500px) {
@@ -81,9 +157,26 @@
     padding: 0.8rem;
   }
 
+  .zkillboard-killmail-onebox__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .zkillboard-killmail-onebox__image,
   .zkillboard-killmail-onebox__image img {
     width: 72px;
     height: 72px;
+  }
+
+  .zkillboard-killmail-onebox__title {
+    font-size: 1.05rem;
+  }
+
+  .zkillboard-killmail-onebox__facts {
+    gap: 0.45rem;
+  }
+
+  .zkillboard-killmail-onebox__fact {
+    width: 100%;
   }
 }
